@@ -14,14 +14,11 @@ class Player(object):
     self.image = pygame.transform.scale(self.image,(50, 50))
     self.x = 50 
     self.y = 50
-    self.center = (25+self.x,50+self.y)
-    self.isGrounded = False
 
   def draw(self, surface):
     surface.blit(self.image, (self.x, self.y))
 
   def movement(self):
-    self.center = (25+self.x,50+self.y)
     key = pygame.key.get_pressed()
     if key[pygame.K_DOWN]:
       self.y += 1
@@ -33,16 +30,8 @@ class Player(object):
       self.x += 1
 
   def gravity(self, height):
-    print("Grav " + str(self.isGrounded))
     if self.y < height - 50 and pygame.key.get_focused:
-      if self.isGrounded == False:
-
-        self.y += 1
-
-  def isOnGround(self):
-      isGrounded = True
-  def isOffGround(self):
-      isGrounded = True
+      self.y += 1
 
 
 pygame.init()
@@ -64,7 +53,5 @@ while running:
   p.draw(screen)
   p.movement()
   p.gravity(screen_height)
-  pf.draw(screen, 150, 70)
-  pf.collision(p)
-  print(p.center)
+  pf.draw(screen)
   pygame.display.update()
