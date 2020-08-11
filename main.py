@@ -14,11 +14,16 @@ class Player(object):
     self.image = pygame.transform.scale(self.image,(50, 50))
     self.x = 50 
     self.y = 50
+    self.rect = pygame.Rect(self.x,self.y,50,50)
+
+    self.center = (25+self.x,50+self.y)
+    self.isGrounded = False
 
   def draw(self, surface):
     surface.blit(self.image, (self.x, self.y))
 
   def movement(self):
+    self.center = (25+self.x,50+self.y)
     key = pygame.key.get_pressed()
     if key[pygame.K_DOWN]:
       self.y += 1
@@ -29,9 +34,28 @@ class Player(object):
     if key[pygame.K_RIGHT]:
       self.x += 1
 
-  def gravity(self, height):
+  def isStanding(self, platfrom):
+    return(pygame.Rect(self.rect.x, self.rect.y + 50,50, 50).colliderect(plat.Platform.rect))
+
+  def dogravity(self, height, platforms):
+    print("Grav " + str(self.isGrounded))
     if self.y < height - 50 and pygame.key.get_focused:
-      self.y += 1
+      for platform in platforms:
+        if self.isStanding(platforms) == True:
+          self.isGrounded = True
+          break;
+        else:
+          self.isGrounded = False
+
+    if self.isGrounded == False:
+      self.y -=1
+        
+      
+
+  
+
+
+
 
 
 pygame.init()
@@ -41,7 +65,10 @@ screen = pygame.display.set_mode((int(screen_width),int(screen_height)))
 
 p = Player()
 pf = plat.Platform()
-
+pd = plat.Platform()
+platforms = []
+platforms.append(pf)
+platforms.append(pd)
 running = True
 while running:
   for event in pygame.event.get():
@@ -52,6 +79,10 @@ while running:
   screen.fill((255, 255, 255))
   p.draw(screen)
   p.movement()
-  p.gravity(screen_height)
-  pf.draw(screen)
+  p.dogravity(screen_height, platforms)
+  pf.draw(screen, 150, 70)
+  pf.collision(p)
+  pd.draw(screen, 250, 30)
+  pd.collision(p)
+  print(p.center)
   pygame.display.update()
