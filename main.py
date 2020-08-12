@@ -65,11 +65,9 @@ screen_height = 600
 screen = pygame.display.set_mode((int(screen_width),int(screen_height)))
 
 p = Player()
-pf = plat.Platform()
-pd = plat.Platform()
-platforms = []
-platforms.append(pf)
-platforms.append(pd)
+platform1 = ((0, 255, 255), pygame.Rect(100, 100, 100, 10))
+platform2 = ((0, 255, 255), pygame.Rect(150, 150, 100, 10))
+platforms = (platform1, platform2)
 running = True
 while running:
   for event in pygame.event.get():
@@ -81,9 +79,6 @@ while running:
   p.draw(screen)
   p.movement()
   p.dogravity(screen_height, platforms)
-  pf.draw(screen, 150, 70)
-  pf.collision(p)
-  pd.draw(screen, 250, 30)
-  pd.collision(p)
+  [platform.draw(screen) for platform in platforms]
   print(p.center)
   pygame.display.update()
