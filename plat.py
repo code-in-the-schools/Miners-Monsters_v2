@@ -6,4 +6,4 @@ class Platform(object):
         self.Rect = rect
 
     def draw(self, screen):
-        pygame.draw.rect(screen, self.colour, self.rect)
+        pygame.draw.rect(screen, self.colour, self.Rect)
