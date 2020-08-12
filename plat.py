@@ -10,7 +10,7 @@ class Platform(object):
     self.x = 70 
     self.Length = 0
     self.Thickness = 0
-    self.rect = pygame.rect(self.x,self.y,self.Length, self.Thickness)
+    self.rect = pygame.Rect(self.x,self.y,self.Length, self.Thickness)
    
     self.colour = (0,0,0)
 
@@ -20,7 +20,7 @@ class Platform(object):
     self.Thickness = int(Thickness)
     self.rect = pygame.Rect(self.x,self.y,self.Length, self.Thickness)
     self.colour = colour
-    pygame.draw.rect(screen, self.colour, self.rect)
+    pygame.draw.Rect(screen, self.colour, self.rect)
 
 
  # def collision(self, obj):

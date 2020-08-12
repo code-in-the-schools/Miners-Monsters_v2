@@ -14,6 +14,7 @@ class Player(object):
     self.image = pygame.transform.scale(self.image,(50, 50))
     self.x = 50 
     self.y = 50
+    self.dy = 0
     self.rect = pygame.Rect(self.x,self.y,50,50)
 
     self.center = (25+self.x,50+self.y)
@@ -34,8 +35,8 @@ class Player(object):
     if key[pygame.K_RIGHT]:
       self.x += 1
 
-  def isStanding(self, platfrom):
-    return(pygame.Rect(self.rect.x, self.rect.y + 50,50, 50).colliderect(plat.Platform.rect))
+  def isStanding(self, platform):
+    return (pygame.Rect(self.rect.x, self.rect.y + self.dy+1,50, 50).colliderect(platform.rect)) 
 
   def dogravity(self, height, platforms):
     print("Grav " + str(self.isGrounded))
