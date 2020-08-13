@@ -42,9 +42,10 @@ class Player(object):
     print("Grav " + str(self.isGrounded))
     if self.y < height - 50 and pygame.key.get_focused:
       for platform in platforms:
-        if self.isStanding(platforms) > -1:
+        print(self.isStanding(platform))
+        if self.isStanding(platform) >= 0:
           self.isGrounded = True
-          break;
+          #break;
         else:
           self.isGrounded = False
 
@@ -65,8 +66,8 @@ screen_height = 600
 screen = pygame.display.set_mode((int(screen_width),int(screen_height)))
 
 p = Player()
-platform1 = plat.Platform((0, 255, 255), pygame.Rect(100, 100, 100, 10))
-platform2 = plat.Platform((0, 255, 255), pygame.Rect(150, 150, 100, 10))
+platform1 = plat.Platform((0, 255, 255), 40, 100, 100, 10)
+platform2 = plat.Platform((0, 255, 255), 150, 150, 100, 10)
 platforms = [platform1.Rect, platform2.Rect]
 running = True
 while running:
@@ -78,6 +79,7 @@ while running:
   screen.fill((255, 255, 255))
   p.draw(screen)
   p.movement()
+  print(str(p.isStanding(platforms))+ " <<<<<")
   p.dogravity(screen_height, platforms)
   platform1.draw(screen)
   platform2.draw(screen)
